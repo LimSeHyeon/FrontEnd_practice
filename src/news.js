@@ -10,6 +10,28 @@ import fs from 'fs'
     - 저장 형태는 Object형태로 하시되 key는 끝나는 날짜, value는 array<object({title:기사제목, url: 기사링크})>로 저장하기
 */
 
-async function main(){}
+let news = [];
+
+const timelineSd = [20240401000000, 20240408000000, 20240408000000];
+const timelineEd = [20240405235959, 20240412235959, 20240415235959];
+
+const baseUrl = "https://search.daum.net/search";
+
+async function main(){
+    for(let i=0;i<timelineEd.length;i++){
+        const resp = await axios.get(baseUrl, {
+            params: {
+                w:'news',
+                cluster:'y',
+                q:'삼성전자',
+                sd: timelineSd[i],
+                ed: timelineEd[i],
+                period:'u',
+                DA:'STC'
+            }
+        });
+        let data = await resp.data;
+    }
+}
 
 main();
